@@ -4,23 +4,44 @@ import java.util.*;
 
 public class Trains {
 
+    public static String[] buildGraphArr(String graphNodes) {
+        String[] nodes = new String[graphNodes.length() / 2]; // Array of nodes with minimal memory allocation
+        nodes = graphNodes.split(","); // All nodes in an array
+        return nodes;
+    }
+
+    public static Map<Character, Map<Character, Integer>> buildGraph(String[] graph) {
+        Map<Character, Map<Character, Integer>> routes = new HashMap<>();
+        // This function builds the actual graph. We key in later to find distances
+        Arrays.sort(graph);
+
+        for (int i = 0; i < graph.length; i++) {
+            if (routes.containsKey(graph[i].toString().charAt(0))) {
+                routes.get(graph[i].toString().charAt(0)).put(graph[i].toString().charAt(1),
+                        Integer.parseInt(graph[i].substring(2)));
+
+            } else {
+                Map<Character, Integer> nodeMap = new HashMap<>();
+                nodeMap.put(graph[i].toString().charAt(1), Integer.parseInt(graph[i].substring(2)));
+                routes.put(graph[i].toString().charAt(0), nodeMap);
+            }
+        }
+        return routes;
+    } 
+
     
-    public static void main(String[] args) throws Exception{
+
+    
+    public static void main(String[] args) throws Exception{ //Main function
         // Read data file
         File file = new File("/Users/danielball/Desktop/Trains/data.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st = "";
-        String[] graph = new String[1]; 
-        while ((st = br.readLine()) != null) graph[0] = st; // Read first line
-        if (graph[0] == null) System.out.println("No input data"); //If first line is null print out not input
-        
-        String[] nodes = new String[graph[0].length()/2]; // Array of nodes with minimal memory allocation
-        nodes = graph[0].split(","); // All nodes in an array
-
-        for (int i = 0; i < nodes.length; i++) {
-            
-            System.out.println(nodes[i]);
-        }
+        String[] graphString = new String[1]; 
+        while ((st = br.readLine()) != null) graphString[0] = st; // Read first line
+        if (graphString[0] == null) System.out.println("No input data"); //If first line is null print out not input
+ 
+        System.out.println(buildGraph(buildGraphArr(graphString[0])));
 
     }
 }
