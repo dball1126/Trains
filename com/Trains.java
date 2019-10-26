@@ -10,6 +10,7 @@ public class Trains {
         return nodes;
     }
 
+
     public static Map<Character, Map<Character, Integer>> buildGraph(String[] graph) {
         Map<Character, Map<Character, Integer>> routes = new HashMap<>();
         // This function builds the actual graph. We key in later to find distances
@@ -29,7 +30,9 @@ public class Trains {
         return routes;
     } 
 
-    
+    // public static String[] distance(String route){
+
+    // }
 
     
     public static void main(String[] args) throws Exception{ //Main function
@@ -40,8 +43,9 @@ public class Trains {
         String[] graphString = new String[1]; 
         while ((st = br.readLine()) != null) graphString[0] = st; // Read first line
         if (graphString[0] == null) System.out.println("No input data"); //If first line is null print out not input
- 
-        System.out.println(buildGraph(buildGraphArr(graphString[0])));
+        String[] allRoutes = new String[graphString[0].length()/2];
+        allRoutes = buildGraphArr(graphString[0]);
+        System.out.println(buildGraph(allRoutes));  // call build graph from the array
 
     }
 }
