@@ -53,21 +53,38 @@ public class Trains {
         int dist = 0;
         
         // first case
-        dist += (actualGraph.get('A').get('B') + actualGraph.get('B').get('C'));
-        System.out.println("The distance of the route A-B-C is " + dist);
+        if (isTrue(actualGraph, 'A', 'B') && isTrue(actualGraph, 'B', 'C')){
+            dist += (actualGraph.get('A').get('B') + actualGraph.get('B').get('C'));
+            System.out.println("The distance of the route A-B-C is " + dist);
+        } else {
+            System.out.println("Not a valid route");
+        }
         
         // second case
-        dist = actualGraph.get('A').get('D');
-        System.out.println("The distance of the route A-D is " + dist);
+        if (isTrue(actualGraph, 'A', 'D')){
+            dist = actualGraph.get('A').get('D');
+            System.out.println("The distance of the route A-D is " + dist);
+        } else {
+            System.out.println("Not a valid route");
+        }
 
         // third case
-        dist = (actualGraph.get('A').get('D') + actualGraph.get('D').get('C'));
-        System.out.println("The distance of the route A-D-C is " + dist);
+        if (isTrue(actualGraph, 'A', 'D') && isTrue(actualGraph, 'D', 'C')){
+
+            dist = (actualGraph.get('A').get('D') + actualGraph.get('D').get('C'));
+            System.out.println("The distance of the route A-D-C is " + dist);
+        }   else {
+            System.out.println("Not a valid route");
+        }
 
         //fourth case 4. The distance of the route A-E-B-C-D.
-        dist = (actualGraph.get('A').get('E') + actualGraph.get('E').get('B') +
-                actualGraph.get('B').get('C') + actualGraph.get('C').get('D'));
-        System.out.println("The distance of the route A-E-B-C-D is " + dist);
+        if (isTrue(actualGraph, 'A', 'E') && isTrue(actualGraph, 'E', 'B') && isTrue(actualGraph, 'B', 'C') && isTrue(actualGraph, 'C', 'D')){
+            dist = (actualGraph.get('A').get('E') + actualGraph.get('E').get('B') +
+                    actualGraph.get('B').get('C') + actualGraph.get('C').get('D'));
+            System.out.println("The distance of the route A-E-B-C-D is " + dist);
+        } else {
+            System.out.println("Not a valid route");
+        }
 
         //fifth case: 5. The distance of the route A-E-D.
         if(isTrue(actualGraph, 'A', 'E') && isTrue(actualGraph, 'E', 'D')){
