@@ -38,9 +38,14 @@ public class Trains {
         }
     }
 
-    public static Integer trips(Map<Character, Map<Character, Integer>> graph, int num){
-        return 0;
-    }
+    // public static Integer trips(Map<Character, Map<Character, Integer>> graph, Character start, Character end, int num){
+    //     int c = 0;
+    //     Set<String> visited = new HashSet<String>();
+    //     System.out.println(hash_Set.contains("D"));        
+    //     HashMap queue[] = new HashMap[20];
+
+    //     return 0;
+    // }
 
     public static void main(String[] args) throws Exception{ //Main function
         // Read data file
@@ -97,8 +102,21 @@ public class Trains {
         } else {
             System.out.println("Not a valid route");
         }
-        // boolean truthy = false;
-        // truthy = (dist == int(dist));
-        System.out.println(trips(actualGraph, 3));
+        
+        // Map<Character, Integer> queue[] = new Map<Character, Integer>[20];
+        // List<Map<String , String>> myMap  = new ArrayList<Map<String,String>>();       
+        // HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
+
+        // for (Map.Entry<Character, HashMap> entry : actualGraph.entrySet()) {
+        //     String key = actualGraph.getKey();
+        //     HashMap value = actualGraph.getValue();
+        //     System.out.println(key);
+        //     // do what you have to do here
+        //     // In your case, another loop.
+        // }
+        ArrayList<Map<Character, Integer>> mylist = new ArrayList<Map<Character, Integer>>();
+
+        actualGraph.forEach((k, v) -> mylist.add(v));
+        System.out.println(mylist);
     }
 }
