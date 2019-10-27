@@ -38,6 +38,10 @@ public class Trains {
         }
     }
 
+    public static Integer trips(Map<Character, Map<Character, Integer>> graph, int num){
+        return 0;
+    }
+
     public static void main(String[] args) throws Exception{ //Main function
         // Read data file
         File file = new File("/Users/danielball/Desktop/Trains/data.txt");
@@ -95,6 +99,6 @@ public class Trains {
         }
         // boolean truthy = false;
         // truthy = (dist == int(dist));
-        System.out.println(isTrue(actualGraph, 'E', 'D'));
+        System.out.println(trips(actualGraph, 3));
     }
 }
