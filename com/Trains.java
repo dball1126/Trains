@@ -1,7 +1,10 @@
 import java.util.Scanner;
 import java.io.*;
 import java.util.*;
-
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 public class Trains {
 
     public static String[] buildGraphArr(String graphNodes) {
@@ -43,6 +46,11 @@ public class Trains {
     //     Set<String> visited = new HashSet<String>();
     //     System.out.println(hash_Set.contains("D"));        
     //     HashMap queue[] = new HashMap[20];
+
+    //     ArrayList<Map<Character, Integer>> mylist = new ArrayList<Map<Character, Integer>>();
+    //     mylist.add(graph.get('C'));
+    //     actualGraph.forEach((k, v) -> mylist.add(v));
+    //     System.out.println(mylist);
 
     //     return 0;
     // }
@@ -115,8 +123,28 @@ public class Trains {
         //     // In your case, another loop.
         // }
         ArrayList<Map<Character, Integer>> mylist = new ArrayList<Map<Character, Integer>>();
+        // ArrayList<Map<Character, Integer>> mylist = new ArrayList<Map<Character, Integer>>();
+        // Map<Character, Integer> newMap = new Map<Character, Integer>();
 
-        actualGraph.forEach((k, v) -> mylist.add(v));
+        // mylist.add(graph);
+        // newMap=actualGraph.get('C');
+        // System.out.println(newMap);
+            System.out.println(actualGraph);
+            
+            Map<Character, Integer> routers = new HashMap<>();
+            Map<Character, Integer> in = new HashMap<>();
+            // routers.put('C', 5);
+            // mylist.add(routers);
+            routers = actualGraph.get('C');
+            routers.forEach((k, v) -> {
+            Map<Character, Integer> inner = new HashMap<>();
+
+                inner.put(k, v);
+                
+                mylist.add(inner);
+            });
+            System.out.println(routers);
+        // actualGraph.forEach((k, v) -> mylist.add(v));
         System.out.println(mylist);
     }
 }
