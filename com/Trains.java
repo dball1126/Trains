@@ -29,10 +29,6 @@ public class Trains {
         return routes;
     } 
 
-    // public static Integer distance(String[] graph){
-    //     return graph;
-    // }
-
     public static void main(String[] args) throws Exception{ //Main function
         // Read data file
         File file = new File("/Users/danielball/Desktop/Trains/data.txt");
@@ -45,8 +41,15 @@ public class Trains {
         
         Map<Character, Map<Character, Integer>> actualGraph = new HashMap<>();
         actualGraph = buildGraph(buildGraphArr(graphString[0]));
-
-        System.out.println(actualGraph);
+        int dist = 0;
         
+        // first case
+        dist += (actualGraph.get('A').get('B') + actualGraph.get('B').get('C'));
+        System.out.println("The distance of the route A-B-C is " + dist);
+        
+        // second case
+        dist = actualGraph.get('A').get('D');
+        System.out.println("The distance of the route A-D is " + dist);
+
     }
 }
