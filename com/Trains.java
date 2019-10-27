@@ -29,6 +29,15 @@ public class Trains {
         return routes;
     } 
 
+    public static boolean isTrue(Map<Character, Map<Character, Integer>> graph, Character char1, Character char2){
+        
+        if (graph.containsKey(char1) && graph.get(char1).containsKey(char2)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void main(String[] args) throws Exception{ //Main function
         // Read data file
         File file = new File("/Users/danielball/Desktop/Trains/data.txt");
@@ -51,5 +60,24 @@ public class Trains {
         dist = actualGraph.get('A').get('D');
         System.out.println("The distance of the route A-D is " + dist);
 
+        // third case
+        dist = (actualGraph.get('A').get('D') + actualGraph.get('D').get('C'));
+        System.out.println("The distance of the route A-D-C is " + dist);
+
+        //fourth case 4. The distance of the route A-E-B-C-D.
+        dist = (actualGraph.get('A').get('E') + actualGraph.get('E').get('B') +
+                actualGraph.get('B').get('C') + actualGraph.get('C').get('D'));
+        System.out.println("The distance of the route A-E-B-C-D is " + dist);
+
+        //fifth case: 5. The distance of the route A-E-D.
+        if(isTrue(actualGraph, 'A', 'E') && isTrue(actualGraph, 'E', 'D')){
+            dist = actualGraph.get('A').get('E') + actualGraph.get('E').get('D');
+            System.out.println("The distance of the route A-E-D is " + dist);
+        } else {
+            System.out.println("Not a valid route");
+        }
+        // boolean truthy = false;
+        // truthy = (dist == int(dist));
+        System.out.println(isTrue(actualGraph, 'E', 'D'));
     }
 }
