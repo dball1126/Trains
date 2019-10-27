@@ -29,9 +29,10 @@ public class Trains {
         return routes;
     } 
 
-    
+    // public static Integer distance(String[] graph){
+    //     return graph;
+    // }
 
-    
     public static void main(String[] args) throws Exception{ //Main function
         // Read data file
         File file = new File("/Users/danielball/Desktop/Trains/data.txt");
@@ -40,8 +41,12 @@ public class Trains {
         String[] graphString = new String[1]; 
         while ((st = br.readLine()) != null) graphString[0] = st; // Read first line
         if (graphString[0] == null) System.out.println("No input data"); //If first line is null print out not input
- 
-        System.out.println(buildGraph(buildGraphArr(graphString[0])));
+        
+        
+        Map<Character, Map<Character, Integer>> actualGraph = new HashMap<>();
+        actualGraph = buildGraph(buildGraphArr(graphString[0]));
 
+        System.out.println(actualGraph);
+        
     }
 }
