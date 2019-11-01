@@ -41,66 +41,46 @@ public class Trains {
         }
     }
 
-    public static Integer trips(Map<Character, Map<Character, Integer>> actualGraph, Character start, Character end, int num){
-        Set<Character> visited = new HashSet<Character>(); // visisted set
-        Integer masterCount = 0; // total number of routes between start and finish
+    public static Integer maxNumOfTrips(Map<Character, Map<Character, Integer>> actualGraph, Character start, Character end, int num){
         Integer count = 0;  // our inside count to check against master
-        ArrayList<Map<Character, Integer>> tripList = new ArrayList<Map<Character, Integer>>(); //main array
+        List<Integer> numbers = new ArrayList<>();
+        ArrayList<Map<Character, Integer>> queue = new ArrayList<Map<Character, Integer>>(); //main array
         Map<Character, Integer> nodes = new HashMap<>(); // hashmap to get values from actualgraph and seperate afterwards
-        if (!actualGraph.containsKey(start)) return 0;
+        List<String> strRoutes = new ArrayList<>();        
+        
+        if (!actualGraph.containsKey(start)) return 0; // if nothing in graph return 0 number of trips
         nodes = actualGraph.get(start);
         nodes.forEach((k, v) -> { // this function seperates {{d =>5, E= 4}} to {d=5},{e=4}}
             Map<Character, Integer> node = new HashMap<>(); // needed to prevent errors
             node.put(k, v);
-            tripList.add(node);   //adds children to seperated arraty
+            queue.add(node);   //adds children to seperated arraty
         });
-        // if (tripList.size() <= 0)   // ideally if nothing is in the array return 0
-        while (tripList.size() > 0) {
-            count += 1;
-            Map<Character, Integer> current = new HashMap<>(); 
-            current = tripList.remove(0);   //shift off first ele from array                                                  
-            if (current.containsKey(end) && count <= num){
-                masterCount += 1;
-                count = 0;
-            }
-            Character key = current.toString().charAt(1); // get key 
-            if (!visited.contains(key)){ //check if visited includes key
-                visited.add(key);  // add to visited should it not include the key
-            }
-            ArrayList<Map<Character, Integer>> children = new ArrayList<Map<Character, Integer>>();
-            Map<Character, Integer> childNodes = new HashMap<>();
-            childNodes = actualGraph.get(key);
-            childNodes.forEach((k, v) -> { // this function seperates {{d =>5, E= 4}} to {d=5},{e=4}}
-                Map<Character, Integer> node = new HashMap<>(); // needed to prevent errors
-                node.put(k, v);
-                children.add(node); // adds children to seperated arraty
-            });
-
-            if (children.size() < 0) {
-                count = 0;
-            } else {
-                while (children.size() > 0) {
-                    Map<Character, Integer> curr = new HashMap<>();
-                    count += 1;
-                    curr = children.remove(0); // shift off first ele from array
-                    if (curr.containsKey(end) && count <= num) {
-                        masterCount += 1;
-                        count = 0;
-                        break;  // found C and < 3
-                    } else {
-                        Map<Character, Integer> kids = new HashMap<>();
-                        kids = actualGraph.get(curr.toString().charAt(1));   //getting char key from hashMap
-                        kids.forEach((k, v) -> {        // ADD children to children array seperated
-                            Map<Character, Integer> node = new HashMap<>(); 
-                            node.put(k, v);      
-                            children.add(node); 
-                        });
-                    }
+        
+        while (queue.size() > 0) {
+            count = 1;
+            Map<Character, Integer> node = new HashMap<>();  // declare hashMap
+            node = queue.remove(0); //queue.shift();
+            Character charKey = node.toString().charAt(1); // get key
+            if (actualGraph.containsKey(charKey)){
+                List<Integer> childNums = new ArrayList<>();
+                childNums = upToRoutes(actualGraph, charKey, end, count, num);
+                if (childNums.size() > 0) {
+                    // Now need to add the answer
                 }
             }
+            
         }
-        return masterCount;
+        // if (tripList.size() <= 0)   // ideally if nothing is in the array return 0
+       return 0;
     }
+
+    public static List<Integer> upToRoutes(Map<Character, Map<Character, Integer>> actualGraph, Character start, Character end, int count, int num){
+        List<Integer> collection = new ArrayList<>();
+        ArrayList<Map<Character, Integer>> queue = new ArrayList<Map<Character, Integer>>(); // main array
+        int oldCount = count;
+        return collection;
+    }
+
 
     public static void main(String[] args) throws Exception{ //Main function
         // Read data file
@@ -158,12 +138,81 @@ public class Trains {
             System.out.println("Not a valid route");
         }
         
+        //Sixth case
+            dist = maxNumOfTrips(actualGraph, 'C', 'C', 3);
+            System.out.println("The number of trips starting at C and ending at C with a maximum of three stops: " + dist);
         
-        
-            System.out.println(actualGraph);
-          
-       
-        
-        System.out.println(trips(actualGraph, 'C', 'C', 3));
+        //Seventh case // may have to check about "exactly 4 stops"  Outputs correct answer but may need to check.
+            // dist = trips(actualGraph, 'A', 'C', 4);
+            // System.out.println("The number of trips starting at A and ending at C with a maximum of four stops: " + dist);
+         
     }
 }
+
+
+
+
+
+
+
+//  while (tripList.size() > 0) {
+//             count = 1;
+//             strRoutes.add(String.valueOf(start));
+//             System.out.println("triplist" + tripList);
+//             Map<Character, Integer> current = new HashMap<>(); 
+//             current = tripList.remove(0);   //shift off first ele from array                                                  
+//             if (current.containsKey(end) && count <= num){
+//                 numbers.add(count);
+//                 strRoutes.add(String.valueOf(end));
+//                 masterCount += 1;
+//                 count = 0;
+//             }
+//             Character key = current.toString().charAt(1); // get key 
+//             // strRoutes.add(String.valueOf(key));
+//             ArrayList<Map<Character, Integer>> children = new ArrayList<Map<Character, Integer>>();
+//             Map<Character, Integer> childNodes = new HashMap<>();
+//             childNodes = actualGraph.get(key);
+//             childNodes.forEach((k, v) -> { // this function seperates {{d =>5, E= 4}} to {d=5},{e=4}}
+//                 Map<Character, Integer> node = new HashMap<>(); // needed to prevent errors
+//                 node.put(k, v);
+//                 children.add(node); // adds children to seperated arraty
+//             });
+
+//             if (children.size() < 0) {
+//                 count = 0;
+//             } else {
+//                 while (children.size() > 0) {
+//                     Set<Character> visited = new HashSet<Character>(); // visisted set
+
+//                     Map<Character, Integer> curr = new HashMap<>();
+//                     count += 1;
+//                     curr = children.remove(0); // shift off first ele from array
+//                     System.out.println(count + " " + children + "current node " + curr);
+//                     // if (count > 4) {
+//                     //     count = 1;
+//                     //     continue;
+//                     // }
+//                     Character charKey = current.toString().charAt(1); // get key
+//                         strRoutes.add(String.valueOf(charKey));
+//                     if (!visited.contains(charKey)) { // check if visited includes key
+//                         visited.add(charKey); // add to visited should it not include the key
+//                     }
+                    
+//                     if (curr.containsKey(end) && count <= num) {
+//                         masterCount += 1;
+//                         strRoutes.add(String.valueOf(end));
+//                         numbers.add(count);
+//                         count = 0;
+//                         continue;  // found C and < 3  // CHANGE TO CONTINUE and numbers change from 3 to 4
+//                     } else {
+//                         Map<Character, Integer> kids = new HashMap<>();
+//                         kids = actualGraph.get(curr.toString().charAt(1));   //getting char key from hashMap
+//                         kids.forEach((k, v) -> {        // ADD children to children array seperated
+//                             Map<Character, Integer> node = new HashMap<>(); 
+//                             node.put(k, v);
+//                             children.add(node); 
+//                         });
+//                     }
+//                 }
+//             }
+//         }System.out.println(strRoutes);System.out.println(numbers);return masterCount;
