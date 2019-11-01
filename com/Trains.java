@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Arrays;
+
 public class Trains {
 
     public static String[] buildGraphArr(String graphNodes) {
@@ -65,20 +67,59 @@ public class Trains {
                 List<Integer> childNums = new ArrayList<>();
                 childNums = upToRoutes(actualGraph, charKey, end, count, num);
                 if (childNums.size() > 0) {
-                    // Now need to add the answer
+                    numbers.addAll(childNums);
+                    System.out.println(numbers);
                 }
             }
             
         }
-        // if (tripList.size() <= 0)   // ideally if nothing is in the array return 0
-       return 0;
+       return numbers.size();
     }
 
     public static List<Integer> upToRoutes(Map<Character, Map<Character, Integer>> actualGraph, Character start, Character end, int count, int num){
-        List<Integer> collection = new ArrayList<>();
-        ArrayList<Map<Character, Integer>> queue = new ArrayList<Map<Character, Integer>>(); // main array
         int oldCount = count;
-        return collection;
+
+        List<Integer> collection = new ArrayList<>();
+        ArrayList<Map<Character, Integer>> children = new ArrayList<Map<Character, Integer>>(); // main array
+        Map<Character, Integer> nodes = new HashMap<>(); // hashmap to get values from actualgraph and seperate
+        nodes = actualGraph.get(start);
+        nodes.forEach((k, v) -> { // this function seperates {{d =>5, E= 4}} to {d=5},{e=4}}
+            Map<Character, Integer> node = new HashMap<>(); // needed to prevent errors
+            node.put(k, v);
+            children.add(node); // adds children to seperated array // afterwards
+        });
+        
+        while (children.size() > 0) {   // while children.size
+            ArrayList<Map<Character, Integer>> queue = new ArrayList<Map<Character, Integer>>(); // main array
+            Map<Character, Integer> node = new HashMap<>(); // declare hashMap
+            Set<Character> visited = new HashSet<Character>(); // visisted set
+
+            node = children.remove(0); // queue.shift();
+            queue.add(node);
+
+            while (queue.size() > 0) { // while children of children.size
+                Map<Character, Integer> innerNode = new HashMap<>(); // declare hashMap
+                innerNode = queue.remove(0);
+                count += 1;
+                Character charKey = innerNode.toString().charAt(1); // get key
+                if (charKey == end && count <= num){
+                    collection.add(count);
+                    count = oldCount;
+                    break;
+                }
+                if (actualGraph.containsKey(charKey) && !visited.contains(charKey)){ // add children of children of children
+                    Map<Character, Integer> kids = new HashMap<>(); // hashmap to get values from actualgraph and
+                    kids = actualGraph.get(charKey);
+                    kids.forEach((k, v) -> { // this function seperates {{d =>5, E= 4}} to {d=5},{e=4}}
+                        Map<Character, Integer> kid = new HashMap<>(); // needed to prevent errors
+                        kid.put(k, v);
+                        queue.add(kid); // adds children to seperated array // afterwards
+                    });   
+                }
+                visited.add(charKey);
+            }
+        }
+        return collection; 
     }
 
 
